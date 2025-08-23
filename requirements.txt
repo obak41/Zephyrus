@@ -1,0 +1,5 @@
+discord.py
+google-generativeai
+python-dotenv
+motor
+Pillow

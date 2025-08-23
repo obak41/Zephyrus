@@ -117,24 +117,27 @@ class AIChat(commands.Cog):
             model = genai.GenerativeModel("gemini-2.0-flash")
             session = model.start_chat(history=history)
 
-            try:
-                if message.attachments:
-                    image_attachments = [att for att in message.attachments if att.content_type and att.content_type.startswith("image/")]
-                    if image_attachments:
-                        image_datas = [await att.read() for att in image_attachments]
-                        uploaded_images = [genai.upload_image(img) for img in image_datas]
-                        response = session.send_message([message.content] + uploaded_images)
-                    else:
-                        response = session.send_message(message.content)
-                else:
-                    response = session.send_message(message.content)
+            async with message.channel.typing():
+                try:
+                    content_parts = [message.content]
+                    if message.attachments:
+                        image_attachments = [att for att in message.attachments if att.content_type and att.content_type.startswith("image/")]
+                        if image_attachments:
+                            image_datas = [await att.read() for att in image_attachments]
+                            uploaded_images = [genai.upload_image(img) for img in image_datas]
+                            content_parts.extend(uploaded_images)
 
-                history.append({"role": "user", "parts": [message.content]})
-                history.append({"role": "model", "parts": [response.text]})
-                save_history(self.histories)
-                await message.channel.reply(response.text)
-            except Exception as e:
-                await message.channel.reply(f"<:warn:1394241229176311888>エラーが発生しました: {e}")
+                    response = await self.bot.loop.run_in_executor(
+                        None,
+                        lambda: session.send_message(content_parts)
+                    )
+
+                    history.append({"role": "user", "parts": [message.content]})
+                    history.append({"role": "model", "parts": [response.text]})
+                    save_history(self.histories)
+                    await message.channel.reply(response.text)
+                except Exception as e:
+                    await message.channel.reply(f"<:warn:1394241229176311888>エラーが発生しました: {e}")
 
         await self.bot.process_commands(message)
 

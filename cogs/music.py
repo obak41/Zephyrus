@@ -21,7 +21,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 load_dotenv()
 
 # --- 設定 ---
-COOKIE_PATH = 'assets/spotify_cookie.txt'
+COOKIE_PATH = 'PATH_TO_TXT_FILE'
 
 YDL_OPTIONS = {
     'format': 'bestaudio/best',

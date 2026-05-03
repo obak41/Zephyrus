@@ -25,7 +25,7 @@ serverlog_collection = db1["channel.serverlog.channel"]
 _NSFW_CACHE = {}
 _CACHE_TTL = 3600
 
-SAFE_BROWSING_API_KEY = "AIzaSyBFYKfUJXoQjwfDjo76wKIS6368bJ3m-Jw"
+SAFE_BROWSING_API_KEY = os.getenv("SAFE_BROWSING_API_KEY")
 SAFESEARCH_ENDPOINT = "https://www.googleapis.com/customsearch/v1"
 SEARCH_ENGINE_ID = "b25abc8abcde349e6"
 

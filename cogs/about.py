@@ -19,7 +19,7 @@ class UtilityCog(commands.Cog):
             timestamp=discord.utils.utcnow()
         )
         embed.add_field(name=f"<:tag:1398952153242144788>Bot名", value=self.bot.user.name, inline=True)
-        embed.add_field(name=f"<:spanner:1399035839324880958>バージョン", value="1.3.3", inline=True)
+        embed.add_field(name=f"<:spanner:1399035839324880958>バージョン", value="1.4", inline=True)
         embed.add_field(name=f"<:roles:1398955473797124107>開発チーム", value="Zephyrus Developers", inline=True)
 
         embed.add_field(name=f"<:ping:1399035063672504421>シャード", value=f"{shard_id + 1}/{self.bot.shard_count}", inline=True)

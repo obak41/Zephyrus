@@ -12,6 +12,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import asyncio
 from collections import defaultdict
 import time
+import re
 
 load_dotenv()
 
@@ -106,7 +107,7 @@ async def safe_send_message(history, content):
     for key in API_KEYS:
         try:
             genai.configure(api_key=key)
-            model = genai.GenerativeModel("gemini-3-pro-preview")
+            model = genai.GenerativeModel("gemini-flash-latest")
             session = model.start_chat(history=history)
 
             response = await asyncio.get_event_loop().run_in_executor(
@@ -321,10 +322,9 @@ class AIChat(commands.Cog):
 
             mention_pt = re.compile(r"<@!?(\d+)>|@everyone|@here")
 
-            if mention_pt.search(response):
+            if mention_pt.search(response.text):
                 await message.channel.send("<:warn:1394241229176311888> メンションが含まれています。")
-            else:
-                pass
+                return
 
             # 空メッセージ防止
             if not response or not getattr(response, "text", "").strip():

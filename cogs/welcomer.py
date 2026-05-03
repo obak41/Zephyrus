@@ -317,6 +317,7 @@ class Welcomer(commands.Cog):
 
     # --- 背景変更 ---
     @welcomer.command(name="edit-bg", description="カードの背景を変更します。")
+    @app_commands.describe(image="推奨サイズ：700x250")
     @app_commands.rename(image="背景画像", preset="プリセット")
     @commands.has_permissions(manage_guild=True)
     @app_commands.choices(

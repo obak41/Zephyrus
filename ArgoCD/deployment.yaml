@@ -15,19 +15,30 @@ spec:
     spec:
       containers:
         - name: bot
-          image: ghcr.io/penti-nameko/zephyrus-bot:v0.5
+          image: k8s-bot:latest
           imagePullPolicy: Always
+          # 個別の環境変数設定（従来通り）
           env:
             - name: TOKEN
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets
-                  key: TOKEN
+                  key: token
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: MONGO_URI
+            - name: PHP_AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: PHP_AUTH_KEY
+            - name: PHP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: PHP_URL
             - name: GEMINI_API_KEY_1
               valueFrom:
                 secretKeyRef:
@@ -43,6 +54,12 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: SAFE_BROWSING_API_KEY
+          # --- ここからファイル生成の設定 ---
+          volumeMounts:
+            - name: env-file
+              mountPath: /app/.env
+              subPath: .env
+          # --- ここまで ---
           resources:
             limits:
               memory: "512Mi"
@@ -50,3 +67,12 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "250m"
+      # --- ここからボリュームの定義 ---
+      volumes:
+        - name: env-file
+          secret:
+            secretName: zephyrus-secrets
+            items:
+              - key: ENV_FILE_CONTENT
+                path: .env
+      # --- ここまで ---

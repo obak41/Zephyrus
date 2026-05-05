@@ -9,16 +9,20 @@ import aiohttp
 from dotenv import load_dotenv
 from datetime import datetime, timedelta, timezone
 
+# --- インテント設定 ---
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 intents.guilds = True
 intents.voice_states = True
 
-token = os.environ.get('TOKEN')
-mongo_uri = os.environ.get('MONGO_URI')
+# --- 環境変数の取得 (Sealed Secretsのキー名と完全一致させる) ---
+TOKEN = os.environ.get('TOKEN')
+MONGO_URI = os.environ.get('MONGO_URI')
+AUTH_KEY = os.environ.get('PHP_AUTH_KEY')
+PHP_URL = os.environ.get('PHP_URL', "https://your-server.com/status.php")
 
-bot = commands.AutoShardedBot(command_prefix="z!", intents=intents, help_command=None)
+bot = commands.AutoShardedBot(command_prefix="r!", intents=intents, help_command=None)
 
 # ===botの導入情報送信===
 load_dotenv("cogs/.env") # cogs/.env を読み込む
@@ -196,7 +200,4 @@ async def cog_permission_error(ctx, error):
 
 # ===== Bot起動 =====
 if __name__ == "__main__":
-    if TOKEN:
-        bot.run(TOKEN)
-    else:
-        print("No token provided. Exit.")
+    bot.run(TOKEN)

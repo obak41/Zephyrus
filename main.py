@@ -15,6 +15,9 @@ intents.members = True
 intents.guilds = True
 intents.voice_states = True
 
+token = os.environ.get('TOKEN')
+mongo_uri = os.environ.get('MONGO_URI')
+
 bot = commands.AutoShardedBot(command_prefix="z!", intents=intents, help_command=None)
 
 # ===botの導入情報送信===
@@ -192,8 +195,5 @@ async def cog_permission_error(ctx, error):
         raise error
 
 # ===== Bot起動 =====
-with open('config.local.json') as f:
-    config = json.load(f)
-    TOKEN = config["token"]
 
 bot.run(TOKEN)

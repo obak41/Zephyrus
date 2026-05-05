@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: zephyrus-bot
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/obak41/Zephyrus.git
+    targetRevision: HEAD
+    path: ArgoCD # kustomization.yaml がこのディレクトリにあることを示します
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: zephyrus
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m0s

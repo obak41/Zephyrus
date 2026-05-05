@@ -1,0 +1,28 @@
+services:
+  db:
+    image: mongo:latest
+    container_name: zephyrus-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+  bot:
+    build: .
+    container_name: zephyrus-bot
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - ./cogs/.env
+    environment:
+      - MONGO_URI=mongodb://admin:password@db:27017/
+    volumes:
+      - .:/app
+
+volumes:
+  mongo_data:

@@ -18,9 +18,9 @@ intents.voice_states = True
 bot = commands.AutoShardedBot(command_prefix="z!", intents=intents, help_command=None)
 
 # ===botの導入情報送信===
-load_dotenv(dotenv_path="cogs/.env")
+load_dotenv() # cogs/.env を読み込む
 AUTH_KEY = os.getenv("PHP_AUTH_KEY")
-PHP_URL = "PHP_URL_HERE"
+PHP_URL = os.getenv("PHP_URL", "PHP_URL_HERE") # 環境変数から読み込み、なければデフォルト値
 
 # ===== 許可するユーザーID =====
 ALLOWED_USER_IDS = [
@@ -190,7 +190,7 @@ async def cog_permission_error(ctx, error):
         raise error
 
 # ===== Bot起動 =====
-with open('config.json') as f:
+with open('config.local.json') as f:
     config = json.load(f)
     TOKEN = config["token"]
 

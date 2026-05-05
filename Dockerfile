@@ -1,23 +1,18 @@
-# 軽量なPython 3.11イメージを使用
 FROM python:3.11-slim
 
-# タイムゾーンをJSTに設定（ログ出力などを日本時間に合わせるため）
-ENV TZ=Asia/Tokyo
-
-# 作業ディレクトリを作成
 WORKDIR /app
 
-# 依存関係のインストールに必要な最小限のツールを導入（必要に応じて）
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
+# 必要なパッケージのインストール
+RUN apt-get update && apt-get install -y \
+    gcc \
     && rm -rf /var/lib/apt/lists/*
 
-# requirements.txt をコピーしてパッケージをインストール
+# 依存関係のインストール
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# プロジェクトの全ファイルをコピー
+# ソースコードのコピー
 COPY . .
 
-# Botを実行
+# Botの起動
 CMD ["python", "main.py"]

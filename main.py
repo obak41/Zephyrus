@@ -195,5 +195,8 @@ async def cog_permission_error(ctx, error):
         raise error
 
 # ===== Bot起動 =====
-
-bot.run(TOKEN)
+if __name__ == "__main__":
+    if TOKEN:
+        bot.run(TOKEN)
+    else:
+        print("No token provided. Exit.")

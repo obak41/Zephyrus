@@ -28,16 +28,6 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: MONGO_URI
-            - name: PHP_AUTH_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: PHP_AUTH_KEY
-            - name: PHP_URL
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: PHP_URL
             - name: GEMINI_API_KEY_1
               valueFrom:
                 secretKeyRef:

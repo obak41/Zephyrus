@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/obak41/Zephyrus.git
-    targetRevision: HEAD
+    targetRevision: k8s-beta
     path: ArgoCD # kustomization.yaml がこのディレクトリにあることを示します
   destination:
     server: https://kubernetes.default.svc

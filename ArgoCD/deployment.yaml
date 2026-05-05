@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: bot
-          image: ghcr.io/penti-nameko/zephyrus-bot:v0.3
+          image: ghcr.io/penti-nameko/zephyrus-bot:v0.4
           imagePullPolicy: Always
           env:
             - name: TOKEN

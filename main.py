@@ -5,7 +5,7 @@ import json
 import sys
 import subprocess
 import asyncio
-import requests
+import aiohttp
 from dotenv import load_dotenv
 from datetime import datetime, timedelta, timezone
 
@@ -18,7 +18,7 @@ intents.voice_states = True
 bot = commands.AutoShardedBot(command_prefix="z!", intents=intents, help_command=None)
 
 # ===botの導入情報送信===
-load_dotenv() # cogs/.env を読み込む
+load_dotenv("cogs/.env") # cogs/.env を読み込む
 AUTH_KEY = os.getenv("PHP_AUTH_KEY")
 PHP_URL = os.getenv("PHP_URL", "PHP_URL_HERE") # 環境変数から読み込み、なければデフォルト値
 
@@ -81,10 +81,12 @@ async def status_task():
         }
 
         # 送信実行
-        requests.post(PHP_URL, data={
-            "key": AUTH_KEY,
-            "data": json.dumps(status_payload)
-        }, timeout=5)
+        async with aiohttp.ClientSession() as session:
+            async with session.post(PHP_URL, data={
+                "key": AUTH_KEY,
+                "data": json.dumps(status_payload)
+            }, timeout=5) as response:
+                await response.read()
 
     except Exception as e:
         print(f"Web status update error: {e}")

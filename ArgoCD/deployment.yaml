@@ -15,8 +15,7 @@ spec:
     spec:
       containers:
         - name: bot
-          # 実際のイメージ名に書き換えてください（例: ghcr.io/user/zephyrus:latest）
-          image: k8s-bot:latest
+          image: ghcr.io/penti-nameko/zephyrus-bot:latest
           imagePullPolicy: Always
           env:
             - name: TOKEN

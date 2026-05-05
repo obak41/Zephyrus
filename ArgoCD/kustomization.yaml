@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: zephyrus
 
 resources:
-  - sealed-secret.yaml
+  - secret.yaml
   - mongodb.yaml
   - deployment.yaml
 

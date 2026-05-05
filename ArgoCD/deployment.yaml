@@ -1,52 +1,81 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: zephyrus-bot
-  namespace: zephyrus
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: zephyrus-bot
-  template:
-    metadata:
-      labels:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: zephyrus-bot
+    namespace: zephyrus
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
         app: zephyrus-bot
-    spec:
-      containers:
-        - name: bot
-          image: ghcr.io/penti-nameko/zephyrus-bot:v0.5
-          imagePullPolicy: Always
-          env:
-            - name: TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: TOKEN
-            - name: MONGO_URI
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: MONGO_URI
-            - name: GEMINI_API_KEY_1
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: GEMINI_API_KEY_1
-            - name: GEMINI_API_KEY_FOR_AUTOMOD
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: GEMINI_API_KEY_FOR_AUTOMOD
-            - name: SAFE_BROWSING_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: SAFE_BROWSING_API_KEY
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "250m"
+    template:
+      metadata:
+        labels:
+          app: zephyrus-bot
+      spec:
+        containers:
+          - name: bot
+            image: k8s-bot:latest
+            imagePullPolicy: Always
+            # 個別の環境変数設定（従来通り）
+            env:
+              - name: TOKEN
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: token
+              - name: MONGO_URI
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: MONGO_URI
+              - name: PHP_AUTH_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: PHP_AUTH_KEY
+              - name: PHP_URL
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: PHP_URL
+              - name: GEMINI_API_KEY_1
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: GEMINI_API_KEY_1
+              - name: GEMINI_API_KEY_FOR_AUTOMOD
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: GEMINI_API_KEY_FOR_AUTOMOD
+              - name: SAFE_BROWSING_API_KEY
+                valueFrom:
+                  secretKeyRef:
+                    name: zephyrus-secrets
+                    key: SAFE_BROWSING_API_KEY
+            # --- ここからファイル生成の設定 ---
+            volumeMounts:
+              - name: env-file
+                mountPath: /app/.env
+                subPath: .env
+              - name: env-file
+                mountPath: /app/cogs/.env  # cogsフォルダ内の.envを作成
+                subPath: .env
+            # --- ここまで ---
+            resources:
+              limits:
+                memory: "512Mi"
+                cpu: "500m"
+              requests:
+                memory: "256Mi"
+                cpu: "250m"
+        # --- ここからボリュームの定義 ---
+        volumes:
+          - name: env-file
+            secret:
+              secretName: zephyrus-secrets
+              items:
+                - key: ENV_FILE_CONTENT
+                  path: .env
+        # --- ここまで ---

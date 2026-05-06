@@ -36,7 +36,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets
-                  key: token
+                  key: TOKEN
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:

@@ -24,11 +24,6 @@ PHP_URL = os.environ.get('PHP_URL', "https://your-server.com/status.php")
 
 bot = commands.AutoShardedBot(command_prefix="r!", intents=intents, help_command=None)
 
-# ===botの導入情報送信===
-load_dotenv("cogs/.env") # cogs/.env を読み込む
-AUTH_KEY = os.getenv("PHP_AUTH_KEY")
-PHP_URL = os.getenv("PHP_URL", "PHP_URL_HERE") # 環境変数から読み込み、なければデフォルト値
-
 # ===== 許可するユーザーID =====
 ALLOWED_USER_IDS = [
     1000000000000000001, 1000000000000000002, 1000000000000000003

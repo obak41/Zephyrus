@@ -195,4 +195,11 @@ async def cog_permission_error(ctx, error):
 
 # ===== Bot起動 =====
 if __name__ == "__main__":
+    if TOKEN:
+        print(f"Token Length: {len(TOKEN)}")
+        print(f"Token Starts With: {TOKEN[:5]}...")
+        print(f"Token Ends With: ...{TOKEN[-5:]}")
+    else:
+        print("TOKEN IS EMPTY (None)")
+    
     bot.run(TOKEN)

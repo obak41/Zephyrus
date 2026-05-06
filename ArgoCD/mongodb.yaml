@@ -45,11 +45,11 @@ spec:
           # メモリ不足でのクラッシュ(OOM)を防ぐためにリソースを明示
           resources:
             limits:
-              memory: "1Gi"
+              memory:  2Gi"
               cpu: "500m"
             requests:
-              memory: "512Mi"
-              cpu: "250m"
+              memory: "1Gi"
+              cpu: "500m"
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:
@@ -71,4 +71,4 @@ spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
-            storage: 1Gi
+            storage: 10Gi

@@ -1,3 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-service
+  namespace: zephyrus
+spec:
+  ports:
+    - port: 27017
+  selector:
+    app: mongodb
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb
+  namespace: zephyrus
+spec:
+  serviceName: "mongodb-service"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      # MongoDBのロックファイルを掃除するInitContainerを追加
+      initContainers:
+        - name: remove-lock-file
+          image: busybox:1.28
+          command:
+            - sh
+            - -c
+            - |
+              rm -f /data/db/mongod.lock
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      containers:
+        - name: mongo
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          # メモリ不足でのクラッシュ(OOM)を防ぐためにリソースを明示
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "500m"
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: MONGO_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: MONGO_ROOT_PASSWORD
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,7 +88,7 @@ spec:
       labels:
         app: zephyrus-bot
     spec:
-      # --- ここから起動順序の調整 (InitContainer) ---
+      # MongoDBがポートを開けるまで待機する
       initContainers:
         - name: wait-for-mongo
           image: busybox:1.28
@@ -25,12 +100,12 @@ spec:
                 echo "waiting for mongodb-service..."
                 sleep 2
               done
-      # --- ここまで ---
       containers:
         - name: bot
-          image: k8s-bot:latest
+          # 【重要】ここを実際のレジストリURLに書き換えてください
+          # 例: ghcr.io/your-github-user/zephyrus-bot:latest
+          image: ghcr.io/penti-nameko/zephyrus-bot:v0.5
           imagePullPolicy: Always
-          # 個別の環境変数設定（従来通り）
           env:
             - name: TOKEN
               valueFrom:
@@ -42,16 +117,6 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: MONGO_URI
-            - name: PHP_AUTH_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: PHP_AUTH_KEY
-            - name: PHP_URL
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: PHP_URL
             - name: GEMINI_API_KEY_1
               valueFrom:
                 secretKeyRef:
@@ -67,15 +132,13 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: SAFE_BROWSING_API_KEY
-          # --- ここからファイル生成の設定 ---
           volumeMounts:
             - name: env-file
               mountPath: /app/.env
               subPath: .env
             - name: env-file
-              mountPath: /app/cogs/.env  # cogsフォルダ内の.envを作成
+              mountPath: /app/cogs/.env
               subPath: .env
-          # --- ここまで ---
           resources:
             limits:
               memory: "512Mi"
@@ -83,7 +146,6 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "250m"
-      # --- ここからボリュームの定義 ---
       volumes:
         - name: env-file
           secret:
@@ -91,4 +153,3 @@ spec:
             items:
               - key: ENV_FILE_CONTENT
                 path: .env
-      # --- ここまで ---

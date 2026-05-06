@@ -45,7 +45,7 @@ spec:
           # メモリ不足でのクラッシュ(OOM)を防ぐためにリソースを明示
           resources:
             limits:
-              memory:  2Gi"
+              memory:  "2Gi"
               cpu: "500m"
             requests:
               memory: "1Gi"

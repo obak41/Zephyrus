@@ -95,7 +95,7 @@ class stickyRoles(commands.Cog):
     @commands.has_guild_permissions(administrator=True)
     async def rolerestore(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用法: `z!sticky-roles enable` または `z!sticky-roles disable`")
+            await ctx.reply("使用法: `r!sticky-roles enable` または `r!sticky-roles disable`")
 
     @rolerestore.command(name="enable", with_app_command=True, description="ロール復元機能を有効にします。")
     @commands.has_guild_permissions(administrator=True)

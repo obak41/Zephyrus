@@ -172,7 +172,7 @@ class AutoModExceptions(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def exempt(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.send("使用方法: `z!exempt channel #チャンネル` または `z!exempt user @ユーザー`", ephemeral=True)
+            await ctx.send("使用方法: `r!exempt channel #チャンネル` または `r!exempt user @ユーザー`", ephemeral=True)
 
     @exempt.command(name="channel", description="指定したチャンネルの例外設定を変更します。")
     @app_commands.rename(channel="チャンネル")

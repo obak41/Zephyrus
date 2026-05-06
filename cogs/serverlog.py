@@ -174,7 +174,7 @@ class ServerLogCog(commands.Cog):
     @commands.hybrid_group(name="logging", description="ログの記録設定")
     async def logging(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!logging enable #チャンネル` または `z!logging disable`")
+            await ctx.reply("使用方法: `r!logging enable #チャンネル` または `r!logging disable`")
 
     @logging.command(name="enable", description="ログの記録を有効にします。")
     @app_commands.describe(channel="記録先を選択")

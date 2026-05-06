@@ -163,7 +163,7 @@ class AIChat(commands.Cog):
     @commands.hybrid_group(name="aichat", description="AIチャットの設定を行います。")
     async def aichat(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!aichat enable #チャンネル` または `z!aichat disable` 履歴消去はz!aichat reset-history", ephemeral=True)
+            await ctx.reply("使用方法: `r!aichat enable #チャンネル` または `r!aichat disable` 履歴消去はr!aichat reset-history", ephemeral=True)
 
     @aichat.command(name="reset-history", description="AIチャットの会話履歴を削除します。")
     async def clear(self, ctx: commands.Context):

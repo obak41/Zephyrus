@@ -50,8 +50,8 @@ class EconomyCore(commands.Cog):
     @commands.hybrid_group(name="ec", description="経済システムの管理・統計コマンドです。")
     async def ec(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!ec stats`, `z!ec cooldowns`, `z!ec leaderboard`, `z!ec redeem`\n"
-            "`z!ec set-cooldown (種類) (時間)`, `z!ec check-cooldown`, `z!clear-cooldown (ユーザー) (種類)`, `z!reset-cooldown`, `z!reset-leaderboard`, `z!reset-user (ユーザー)`, `z!reset-economy`")
+            await ctx.reply("使用方法: `r!ec stats`, `r!ec cooldowns`, `r!ec leaderboard`, `r!ec redeem`\n"
+            "`r!ec set-cooldown (種類) (時間)`, `r!ec check-cooldown`, `r!clear-cooldown (ユーザー) (種類)`, `r!reset-cooldown`, `r!reset-leaderboard`, `r!reset-user (ユーザー)`, `r!reset-economy`")
 
     @ec.command(name="set-cooldown", description="クールダウン時間を設定します。", aliases=["sc"])
     @commands.has_permissions(manage_guild=True)

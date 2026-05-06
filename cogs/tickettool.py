@@ -376,7 +376,7 @@ class TicketMentions(commands.Cog):
     @commands.hybrid_group(name="tickettool", description="チケットツールの設定をします。")
     async def tickettool(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法:`z!tickettool create` または `z!tickettool mentions`")
+            await ctx.reply("使用方法:`r!tickettool create` または `r!tickettool mentions`")
 
     @tickettool.command(name="mentions", description="チケットツールのメンション設定を変更します。")
     async def tickettool_mentions(self, ctx: commands.Context):

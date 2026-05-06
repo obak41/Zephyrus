@@ -31,7 +31,7 @@ class EconomyMoney(commands.Cog):
     @commands.hybrid_group(name="bank", description="銀行の操作を行います。")
     async def bank(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!bank deposit 金額` または `z!bank withdraw 金額`")
+            await ctx.reply("使用方法: `r!bank deposit 金額` または `r!bank withdraw 金額`")
 
     @bank.command(name="deposit", description="所持金を銀行に預けます。", aliases=["dep"])
     @app_commands.rename(amount="金額")
@@ -67,7 +67,7 @@ class EconomyMoney(commands.Cog):
     @commands.hybrid_group(name="money", description="お金に関する管理コマンドです。")
     async def money(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!money add`, `z!money remove`, `z!money give`, `z!money log`")
+            await ctx.reply("使用方法: `r!money add`, `r!money remove`, `r!money give`, `r!money log`")
 
     @money.command(name="add", description="指定したメンバーの残高を増やします。")
     @commands.has_permissions(manage_guild=True)

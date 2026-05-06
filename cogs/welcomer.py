@@ -278,7 +278,7 @@ class Welcomer(commands.Cog):
     @commands.has_permissions(manage_guild=True)
     async def welcomer(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.send("使用方法: z!welcomer [welcome|goodbye|channel|edit-bg|edit-color|show-preview]", ephemeral=True)
+            await ctx.send("使用方法: r!welcomer [welcome|goodbye|channel|edit-bg|edit-color|show-preview]", ephemeral=True)
 
     # --- 有効/無効設定 ---
     @welcomer.command(name="welcome", description="ようこそカードの設定をします。")

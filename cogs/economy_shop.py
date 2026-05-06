@@ -156,7 +156,7 @@ class EconomyShop(commands.Cog):
     @commands.hybrid_group(name="item", description="アイテム関連の操作を行います。")
     async def item(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!item store` `z!item buy <アイテム>` `z!item use <アイテム>`", ephemeral=True)
+            await ctx.reply("使用方法: `r!item store` `r!item buy <アイテム>` `r!item use <アイテム>`", ephemeral=True)
 
     @item.command(name="store", description="ショップを開きます。")
     async def item_store(self, ctx: commands.Context):

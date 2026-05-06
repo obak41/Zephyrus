@@ -63,7 +63,7 @@ class GuildLogCog(commands.Cog):
                     title="Zephyrusを導入していただきありがとうございます！",
                     description=(
                         f"<:check:1394240622310850580> Zephyrusが{guild.name}に正常に追加されました！\n\n"
-                        "コマンドは `/help` または `z!help` で確認できます。"
+                        "コマンドは `/help` または `r!help` で確認できます。"
                     ),
                     color=discord.Color.blue()
                 )

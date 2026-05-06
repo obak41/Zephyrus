@@ -133,7 +133,7 @@ class EconomyJob(commands.Cog):
     @commands.hybrid_group(name="job", description="仕事の確認・切り替えを行います。")
     async def job(self, ctx: commands.Context):
         if ctx.invoked_subcommand is None:
-            await ctx.reply("使用方法: `z!job list` または `z!job apply 仕事名`", ephemeral=True)
+            await ctx.reply("使用方法: `r!job list` または `r!job apply 仕事名`", ephemeral=True)
 
     @job.command(name="list", description="利用可能な職業を一覧表示します。")
     async def job_list(self, ctx: commands.Context):

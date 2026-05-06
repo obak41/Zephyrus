@@ -13,7 +13,6 @@ spec:
       labels:
         app: zephyrus-bot
     spec:
-      # MongoDBがポートを開けるまで待機する
       initContainers:
         - name: wait-for-mongo
           image: busybox:1.28
@@ -27,43 +26,20 @@ spec:
               done
       containers:
         - name: bot
-          # 【重要】ここを実際のレジストリURLに書き換えてください
-          # 例: ghcr.io/your-github-user/zephyrus-bot:latest
           image: ghcr.io/penti-nameko/zephyrus-bot:v0.5
           imagePullPolicy: Always
+          # 個別に設定しなくても、これ1つでSecret内の全データを環境変数として読み込みます
+          envFrom:
+            - secretRef:
+                name: zephyrus-secrets
+          # もしアプリ側が「TOKEN」ではなく「token」という小文字の名前を期待しているなら
+          # 以下のように個別に書くスタイルを残してもOKです（その場合、keyは大文字に合わせます）
           env:
-            - name: TOKEN
+            - name: token
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: TOKEN
-            - name: MONGO_URI
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: MONGO_URI
-            - name: GEMINI_API_KEY_1
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: GEMINI_API_KEY_1
-            - name: GEMINI_API_KEY_FOR_AUTOMOD
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: GEMINI_API_KEY_FOR_AUTOMOD
-            - name: SAFE_BROWSING_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: zephyrus-secrets
-                  key: SAFE_BROWSING_API_KEY
-          volumeMounts:
-            - name: env-file
-              mountPath: /app/.env
-              subPath: .env
-            - name: env-file
-              mountPath: /app/cogs/.env
-              subPath: .env
           resources:
             limits:
               memory: "512Mi"
@@ -71,10 +47,3 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "250m"
-      volumes:
-        - name: env-file
-          secret:
-            secretName: zephyrus-secrets
-            items:
-              - key: ENV_FILE_CONTENT
-                path: .env

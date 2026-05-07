@@ -64,12 +64,12 @@ spec:
               memory: "1Gi"
               cpu: "500m"
           env:
-            - name: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_ROOT_USERNAME
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: MONGO_ROOT_USERNAME
-            - name: MONGO_INITDB_ROOT_PASSWORD
+            - name: MONGO_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets
@@ -120,7 +120,7 @@ spec:
             - secretRef:
                 name: zephyrus-secrets
           env:
-            - name: token  # アプリケーション側が小文字を期待する場合のエイリアス
+            - name: TOKEN  # アプリケーション側が小文字を期待する場合のエイリアス
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets

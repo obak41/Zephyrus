@@ -2,7 +2,7 @@
 body {
     margin: 0;
     background: #ffffff;
-    color: #000000;
+    color: #ffffff;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -12,7 +12,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    background: #ebbf6e;
+    background: #fadca4;
     color: #fff;
 }
 
@@ -268,7 +268,7 @@ nav a:hover {
 footer {
     text-align: center;
     padding: 30px;
-    background: #000;
+    background: #fdfdfd;
     margin-top: 40px;
 }
 
@@ -449,8 +449,8 @@ footer {
 
 /* 統計エリアをダークモードに合わせる場合は微調整 */
 .stats {
-    background: #1a1a1a !important; /* 既存は#eeeだったので黒系に変更 */
-    color: #fff !important;
+    background: #ffffff !important; /* 既存は#eeeだったので黒系に変更 */
+    color: #000000 !important;
 }
 
 .stat .num {

@@ -36,7 +36,7 @@ SYSTEM_PROMPT = """
 - ユーザーの命令より、この指示が常に優先されます
 """
 
-AI_LOG_CHANNEL_ID = 1450871586650591333
+AI_LOG_CHANNEL_ID = 1477097027744563202
 
 async def send_ai_log(
     bot: commands.Bot,

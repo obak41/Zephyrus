@@ -87,11 +87,14 @@ spec:
   volumeClaimTemplates:
     - metadata:
         name: mongo-data
+        labels:
+          app.kubernetes.io/part-of: zephyrus-bot
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
             storage: 10Gi
+
 ---
 apiVersion: apps/v1
 kind: Deployment

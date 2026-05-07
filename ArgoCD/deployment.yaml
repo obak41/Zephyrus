@@ -39,10 +39,17 @@ spec:
               mountPath: /data/db
       containers:
         - name: mongo
-          image: mongo:latest
-          command:
-            - mongod
-          args: ["--bind_ip_all"]
+          image: mongo:7.0
+          securityContext:
+            ulimits:
+              nofile:
+                soft: 64000
+                hard: 64000
+        command: ["bash", "-c"]
+        args:
+          - |
+            ulimit -n 64000
+            exec mongod --bind_ip_all
           readinessProbe:
             tcpSocket:
               port: 27017
@@ -59,10 +66,10 @@ spec:
           resources:
             limits:
               memory:  "2Gi"
-              cpu: "500m"
+              cpu: "1"
             requests:
-              memory: "1Gi"
-              cpu: "500m"
+              memory: "4Gi"
+              cpu: "2"
           env:
             - name: MONGO_ROOT_USERNAME
               valueFrom:

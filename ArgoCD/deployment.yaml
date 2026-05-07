@@ -10,6 +10,18 @@ spec:
   selector:
     app: zephyrus-mongodb
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zephyrus-mongodb-svc
+  namespace: zephyrus
+spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+  selector:
+    app: zephyrus-mongodb
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -39,17 +51,12 @@ spec:
               mountPath: /data/db
       containers:
         - name: mongo
-          image: mongo:7.0
-          securityContext:
-            ulimits:
-              nofile:
-                soft: 64000
-                hard: 64000
-        command: ["bash", "-c"]
-        args:
-          - |
-            ulimit -n 64000
-            exec mongod --bind_ip_all
+          image: mongo:8.0
+          command: ["bash", "-c"]
+          args:
+            - |
+              ulimit -n 64000
+              exec mongod --bind_ip_all
           readinessProbe:
             tcpSocket:
               port: 27017
@@ -64,10 +71,10 @@ spec:
           ports:
             - containerPort: 27017
           resources:
-            limits:
-              memory:  "2Gi"
-              cpu: "1"
             requests:
+              memory: "2Gi"
+              cpu: "1"
+            limits:
               memory: "4Gi"
               cpu: "2"
           env:

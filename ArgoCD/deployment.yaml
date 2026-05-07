@@ -175,6 +175,18 @@ spec:
                   name: zephyrus-secrets
                   key: MONGO_URI
 ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zephyrus-web
+  namespace: zephyrus
+spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+  selector:
+    app: zephyrus-web
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:

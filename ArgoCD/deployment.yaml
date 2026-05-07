@@ -39,12 +39,12 @@ spec:
               mountPath: /data/db
       containers:
         - name: mongo
-          image: mongo:8.2
+          image: percona/percona-server-mongodb:7.0
           command: ["bash", "-c"]
           args:
             - |
               ulimit -n 64000
-              exec mongod --bind_ip_all
+              exec mongod --bind_ip_all  --wiredTigerCheckpointDelaySecs 60
           readinessProbe:
             tcpSocket:
               port: 27017

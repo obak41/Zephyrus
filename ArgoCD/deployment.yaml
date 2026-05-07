@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: zephyrus
+  name: zephyrus-mongodb-svc
   namespace: zephyrus
 spec:
   clusterIP: None
@@ -16,7 +16,7 @@ metadata:
   name: zephyrus-mongodb
   namespace: zephyrus
 spec:
-  serviceName: "zephyrus"
+  serviceName: "zephyrus-mongodb-svc"
   replicas: 1
   selector:
     matchLabels:
@@ -108,9 +108,10 @@ spec:
             - sh
             - -c
             - |
-              until nc -zv zephyrus 27017; do
+              until nc -zv zephyrus-mongodb-svc 27017; do
                 echo "waiting for mongodb-service..."
                 sleep 2
+              done
               done
       containers:
         - name: bot
@@ -126,9 +127,9 @@ spec:
                   name: zephyrus-secrets
                   key: TOKEN
             - name: MONGO_HOST
-              value: "zephyrus-mongodb"
+              value: "zephyrus-mongodb-svc" 
             - name: MONGO_PORT
-              value: "27017
+              value: "27017"
             - name: GEMINI_API_KEY_1
               valueFrom:
                 secretKeyRef:

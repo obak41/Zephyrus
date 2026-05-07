@@ -154,22 +154,40 @@ class ServerLogCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.log_channels = {}
+        # main.pyで定義したMONGO_URIを使ってここでコレクションを定義するか、
+        # あるいはbotオブジェクトに持たせたdbを利用します。
+        self.db_client = motor.motor_asyncio.AsyncIOMotorClient(os.environ.get('MONGO_URI'))
+        self.collection = self.db_client['your_db_name']['server_logs']
 
     async def cog_load(self):
         """Cogロード時にMongoDBからキャッシュを読み込む"""
-        async for doc in log_collection.find():
-            self.log_channels[str(doc["_id"])] = doc["log_channel_id"]
+        print(f"[{self.__class__.__name__}] データの読み込みを開始します...")
+        try:
+            # self.collection (上で定義したもの) を使用する
+            cursor = self.collection.find().max_time_ms(5000)
+            async for doc in cursor:
+                # ドキュメントの構造に合わせて調整 (例: _id が文字列か数値か)
+                self.log_channels[str(doc["_id"])] = doc["log_channel_id"]
+            
+            print(f"[{self.__class__.__name__}] {len(self.log_channels)}件のデータをロードしました。")
+        except Exception as e:
+            print(f"[{self.__class__.__name__}] データのロード中にエラーが発生しました: {e}")
+            self.log_channels = {}
 
     async def get_log_channel(self, guild: discord.Guild):
+        # キャッシュからチャンネルIDを取得
         log_channel_id = self.log_channels.get(str(guild.id))
         if log_channel_id:
             return guild.get_channel(log_channel_id)
         return None
-      
+
     async def send_log(self, guild: discord.Guild, embed: discord.Embed):
         log_channel = await self.get_log_channel(guild)
         if log_channel:
-            await log_channel.send(embed=embed)
+            try:
+                await log_channel.send(embed=embed)
+            except Exception as e:
+                print(f"ログ送信失敗: {e}")
 
     @commands.hybrid_group(name="logging", description="ログの記録設定")
     async def logging(self, ctx: commands.Context):

@@ -180,6 +180,7 @@ kind: Service
 metadata:
   name: zephyrus-web
   namespace: zephyrus
+spec:
   ports:
     - port: 3000
       targetPort: 3000

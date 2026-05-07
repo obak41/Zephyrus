@@ -45,8 +45,8 @@ spec:
             - mongod
           args:
             - "--bind_ip_all"
-            - "--setParameter"
-            - "net.maxIncomingConnections=1000"
+            - "--smallfiles"
+            - "maxConns=1000"
           readinessProbe:
             tcpSocket:
               port: 27017

@@ -45,6 +45,7 @@ spec:
             - mongod
             - "--bind_ip_all"
             - "--setParameter"
+            - "maxIdleTimeMS=600000"
             - "--setParameter"
             - "net.maxIncomingConnections=1000"
           readinessProbe:

@@ -112,7 +112,6 @@ spec:
                 echo "waiting for mongodb-service..."
                 sleep 2
               done
-              done
       containers:
         - name: bot
           image: ghcr.io/penti-nameko/zephyrus-bot:v1.0

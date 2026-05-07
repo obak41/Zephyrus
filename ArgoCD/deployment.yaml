@@ -41,11 +41,11 @@ spec:
         - name: mongo
           image: mongo:8.2
           command: ["bash", "-c"]
-        args:
+          args:
             - |
               ulimit -n 64000
               exec mongod --bind_ip_all
-        readinessProbe:
+          readinessProbe:
             tcpSocket:
               port: 27017
             initialDelaySeconds: 30

@@ -2,7 +2,7 @@
 body {
     margin: 0;
     background: #ffffff;
-    color: #ffffff;
+    color: #000000;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -13,7 +13,7 @@ body {
     align-items: center;
     padding: 15px 40px;
     background: #fadca4;
-    color: #fff;
+    color: #000;
 }
 
 .logo-img {
@@ -29,7 +29,7 @@ body {
 
 nav a {
     margin-left: 20px;
-    color: #fff;
+    color: #000;
     text-decoration: none;
     font-weight: bold;
 }
@@ -245,13 +245,15 @@ nav a:hover {
 
 .feature {
     width: 30%;
-    background: #1a1a1a;
+    background: #ffffff;
+    color: #000000;
     padding: 20px;
     border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
 .feature h3 {
-    color: #ebbf6e;
+    color: #d4a045;
 }
 
 /* ========= 利用規約/プライバシーポリシーコンテンツ ========= */
@@ -260,7 +262,9 @@ nav a:hover {
     margin: 30px auto;
     padding: 20px 25px;
     line-height: 1.8;
-    background: #1a1a1a;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #ddd;
     border-radius: 10px;
 }
 
@@ -311,7 +315,7 @@ footer {
 
     /* ヒーロー縮小 */
     .hero {
-        height: 250px;
+        height: auto;
         padding: 20px;
     }
 
@@ -398,7 +402,7 @@ footer {
         font-size: 28px;
         background: none;
         border: none;
-        color: white;
+        color: #000;
         cursor: pointer;
         margin-left: auto; /* 左側に大きな空白を作って右に寄せる */
         padding-right: 10px; /* 画面の端に近すぎない程度の微調整 */
@@ -413,7 +417,7 @@ footer {
         top: 0;
         width: 250px;
         height: 100vh;
-        background: #111;
+        background: #ffffff;
         display: flex;
         flex-direction: column;
         padding-top: 80px;
@@ -429,15 +433,15 @@ footer {
     /* メニュー項目 */
     .nav-menu a {
         padding: 15px 20px;
-        color: white;
+        color: #000;
         text-decoration: none;
         font-size: 18px;
-        border-bottom: 1px solid #222;
+        border-bottom: 1px solid #eee;
     }
     
     /* ホバー */
     .nav-menu a:hover {
-        background: #222;
+        background: #f4f4f4;
     }
 }
 
@@ -476,19 +480,20 @@ footer {
 .main-layout { display: flex; min-height: calc(100vh - 60px); }
 
 /* サイドバー */
-.sidebar { width: 240px; background: #2c2f33; padding: 20px; }
+.sidebar { width: 240px; background: #f8f9fa; padding: 20px; border-right: 1px solid #ddd; }
 .sidebar ul { list-style: none; padding: 0; }
 .sidebar li { padding: 12px; border-radius: 5px; margin-bottom: 5px; }
 .sidebar li.active { background: #5865f2; }
-.sidebar a { color: white; text-decoration: none; }
+.sidebar a { color: #333; text-decoration: none; }
 
 /* ユーザーメニュー */
 .user-menu { position: relative; cursor: pointer; }
 .avatar-small { width: 40px; height: 40px; border-radius: 50%; }
 .dropdown {
-    position: absolute; right: 0; top: 50px; background: #23272a;
+    position: absolute; right: 0; top: 50px; background: #ffffff;
     padding: 20px; border-radius: 8px; display: none; text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 100; min-width: 180px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 100; min-width: 180px;
+    color: #000;
 }
 .dropdown.show { display: block; }
 .avatar-large { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
@@ -502,13 +507,14 @@ footer {
 /* サーバー一覧 */
 .server-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; padding: 20px; }
 .server-card {
-    background: #2f3136; padding: 15px; border-radius: 10px; text-align: center;
-    transition: 0.2s; border: 1px solid transparent;
+    background: #ffffff; padding: 15px; border-radius: 10px; text-align: center;
+    transition: 0.2s; border: 1px solid #ddd;
+    color: #000;
 }
 .server-card:hover { border-color: #5865f2; transform: translateY(-5px); }
 .server-icon { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; }
 .server-card {
-    background: #2f3136;
+    background: #ffffff;
     border-radius: 8px;
     padding: 20px;
     display: flex;
@@ -520,12 +526,12 @@ footer {
 }
 
 .server-card:hover {
-    background: #3c3f44;
+    background: #f9f9f9;
 }
 
 .server-icon {
     width: 64px;
     height: 64px;
     border-radius: 50%;
-    background: #36393f; /* アイコンがない時用 */
+    background: #eee; /* アイコンがない時用 */
 }

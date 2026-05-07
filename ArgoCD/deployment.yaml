@@ -42,6 +42,7 @@ spec:
           image: mongo:latest
           command:
             - mongod
+          args: ["--bind_ip_all"]
           readinessProbe:
             tcpSocket:
               port: 27017

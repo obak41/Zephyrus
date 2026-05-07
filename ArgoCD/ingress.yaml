@@ -1,19 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: zephyrus-ingress
+  name: zephyrus-web
   namespace: zephyrus
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    # ここには rewrite-target を書かない（グローバルに適用されるのを防ぐ）
 spec:
   ingressClassName: nginx
   rules:
     - host: zephyrus.uniproject.jp
       http:
         paths:
-          # フロントエンド（rewriteなし：/assets/xxx がそのまま届く）
           - path: /
             pathType: Prefix
             backend:

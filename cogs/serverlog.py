@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 from dotenv import load_dotenv
 import math
+import motor.motor_asyncio
 
 load_dotenv()
 

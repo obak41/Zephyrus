@@ -114,7 +114,7 @@ spec:
               done
       containers:
         - name: bot
-          image: ghcr.io/penti-nameko/zephyrus-bot:v0.9
+          image: ghcr.io/penti-nameko/zephyrus-bot:v1.0
           imagePullPolicy: Always
           envFrom:
             - secretRef:

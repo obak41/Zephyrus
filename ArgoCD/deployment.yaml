@@ -192,7 +192,7 @@ spec:
     spec:
       containers:
         - name: web
-          image: ghcr.io/penti-nameko/zephyrus-bot-web:v0.1 # Web用のイメージを指定
+          image: ghcr.io/penti-nameko/zephyrus-web:v0.1 # Web用のイメージを指定
           ports:
             - containerPort: 3000
           env:

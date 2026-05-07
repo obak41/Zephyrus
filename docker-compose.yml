@@ -27,7 +27,7 @@ services:
   web:
     build:
       context: ./web
-      dockerfile: ./node-app/Dockerfile
+      dockerfile: node-app/Dockerfile
     container_name: zephyrus-web
     restart: always
     depends_on:

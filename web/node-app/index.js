@@ -36,7 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // --- 2. Discord認証設定 ---
-const CLIENT_ID = '1394981150178414632';
+const CLIENT_ID = '1501188067149615324';
 const CLIENT_SECRET = process.env.CLIENT_SECRET; 
 
 passport.serializeUser((user, done) => done(null, user));

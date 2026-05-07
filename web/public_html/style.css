@@ -1,8 +1,8 @@
 /* ========= 基本スタイル ========= */
 body {
     margin: 0;
-    background: #111;
-    color: #fff;
+    background: #ffffff;
+    color: #000000;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -12,7 +12,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 40px;
-    background: #000;
+    background: #ebbf6e;
     color: #fff;
 }
 
@@ -35,7 +35,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #ff0000;
+    color: #ebbf6e;
 }
 
 /* ========= ヒーローセクション ========= */
@@ -85,16 +85,16 @@ nav a:hover {
 
 /* サーバーに招待（メインボタン） */
 .btn-primary {
-    background: #ff0000;
+    background: #ebbf6e;
     color: #fff;
-    border: 2px solid #ff0000;
+    border: 2px solid #ebbf6e;
 }
 
 .btn-primary:hover {
-    background: #cc0000;
-    border-color: #cc0000;
+    background: #ebb146;
+    border-color: #ebb146;
     transform: translateY(-3px); /* 浮き上がるアニメーション */
-    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+    box-shadow: 0 5px 15px rgba(235, 191, 110, 0.4);
 }
 
 /* 機能を見る（サブボタン） */
@@ -223,7 +223,7 @@ nav a:hover {
 .stat .num {
     font-size: 32px;
     font-weight: bold;
-    color: #ff0000;
+    color: #ebbf6e;
 }
 
 /* ========= 特徴セクション ========= */
@@ -251,7 +251,7 @@ nav a:hover {
 }
 
 .feature h3 {
-    color: #ff3333;
+    color: #ebbf6e;
 }
 
 /* ========= 利用規約/プライバシーポリシーコンテンツ ========= */

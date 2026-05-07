@@ -45,7 +45,6 @@ spec:
             - mongod
           args:
             - "--bind_ip_all"
-            - "--smallfiles"
             - "maxConns=1000"
           readinessProbe:
             tcpSocket:

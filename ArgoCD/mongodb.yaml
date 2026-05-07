@@ -40,6 +40,7 @@ spec:
       containers:
         - name: mongo
           image: mongo:latest
+          args: ["--wiredTigerCacheSizeGB", "0.25"]
           ports:
             - containerPort: 27017
           # メモリ不足でのクラッシュ(OOM)を防ぐためにリソースを明示

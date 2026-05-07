@@ -125,6 +125,46 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: TOKEN
+            - name: GEMINI_API_KEY_1
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: GEMINI_API_KEY_1
+            - name: GEMINI_API_KEY_2
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: GEMINI_API_KEY_2
+            - name: GEMINI_API_KEY_3
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: GEMINI_API_KEY_3
+            - name: GEMINI_API_KEY_4
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: GEMINI_API_KEY_4
+            - name: GEMINI_API_KEY_FOR_AUTOMOD
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: GEMINI_API_KEY_FOR_AUTOMOD
+            - name: AICHAT_LOG_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: AICHAT_LOG_WEBHOOK
+            - name: SAFE_BROWSING_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: SAFE_BROWSING_API_KEY
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: MONGO_URI
           resources:
             limits:
               memory: "512Mi"

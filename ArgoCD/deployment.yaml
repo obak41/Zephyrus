@@ -175,19 +175,6 @@ spec:
                   name: zephyrus-secrets
                   key: MONGO_URI
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: zephyrus-web-svc
-  namespace: zephyrus
-spec:
-  type: ClusterIP
-  ports:
-    - port: 80
-      targetPort: 3000
-  selector:
-    app: zephyrus-web
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:

@@ -125,6 +125,10 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: TOKEN
+            - name: MONGO_HOST
+              value: "zephyrus-mongodb"
+            - name: MONGO_PORT
+              value: "27017
             - name: GEMINI_API_KEY_1
               valueFrom:
                 secretKeyRef:

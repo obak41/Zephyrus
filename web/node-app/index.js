@@ -5,8 +5,20 @@ const session = require('express-session');
 const passport = require('passport');
 const DiscordStrategy = require('passport-discord').Strategy;
 const { Client, GatewayIntentBits } = require('discord.js');
+const mongoose = require('mongoose');
 
 const app = express();
+
+// --- MongoDB 接続設定 ---
+const MONGO_URI = process.env.MONGO_URI || 'mongodb://admin:password@zephyrus-mongodb-svc:27017/zephyrus?authSource=admin';
+mongoose.connect(MONGO_URI).catch(err => console.error('MongoDB connection error:', err));
+
+const StatsSchema = new mongoose.Schema({
+    _id: String,
+    data: Object,
+    updatedAt: { type: Date, default: Date.now }
+});
+const Stats = mongoose.model('Stats', StatsSchema);
 
 // --- 0. Botクライアントの設定 ---
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -33,7 +45,7 @@ passport.deserializeUser((obj, done) => done(null, obj));
 passport.use(new DiscordStrategy({
     clientID: CLIENT_ID,
     clientSecret: CLIENT_SECRET,
-    callbackURL: 'https://dashboard.zephyrus-net.com/auth/callback',
+    callbackURL: 'https://zephyrus.uniproject.jp/auth/callback',
     scope: ['identify', 'guilds']
 }, (accessToken, refreshToken, profile, done) => {
     return done(null, profile);
@@ -100,17 +112,13 @@ app.get('/api/user', (req, res) => {
     });
 });
 
-app.get('/api/stats', (req, res) => {
-    const statusJsonPath = path.join(__dirname, '../public_html/status.json');
+app.get('/api/stats', async (req, res) => {
     try {
-        if (fs.existsSync(statusJsonPath)) {
-            const rawData = fs.readFileSync(statusJsonPath, 'utf8');
-            res.json(JSON.parse(rawData));
-        } else {
-            res.status(404).json({ error: "File not found" });
-        }
-    } catch (e) {
-        res.status(500).json({ error: "Read error" });
+        const stats = await Stats.findById('bot_stats');
+        if (!stats) return res.status(404).json({ error: "Stats not found in DB" });
+        res.json(stats.data);
+    } catch (err) {
+        res.status(500).json({ error: "Database error" });
     }
 });
 

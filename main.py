@@ -23,6 +23,10 @@ MONGO_URI = os.environ.get('MONGO_URI')
 AUTH_KEY = os.environ.get('PHP_AUTH_KEY')
 PHP_URL = os.environ.get('PHP_URL', "https://your-server.com/status.php")
 
+# MongoDB クライアントの初期化
+mongo_client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI)
+stats_db = mongo_client["zephyrus"]["stats"]
+
 bot = commands.AutoShardedBot(command_prefix="r!", intents=intents, help_command=None)
 
 # ===== 許可するユーザーID =====
@@ -82,6 +86,16 @@ async def status_task():
             "shards": shard_info,
             "last_update": now_jst.strftime("%Y/%m/%d %H:%M:%S") # JSTでフォーマット
         }
+
+        # --- MongoDBへの保存 (Webダッシュボード用) ---
+        await stats_db.update_one(
+            {"_id": "bot_stats"},
+            {"$set": {
+                "data": status_payload,
+                "updatedAt": datetime.now(timezone.utc)
+            }},
+            upsert=True
+        )
 
         # 送信実行
         async with aiohttp.ClientSession() as session:

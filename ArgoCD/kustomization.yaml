@@ -8,5 +8,6 @@ resources:
   - secret.yaml
   - deployment.yaml
 
-commonLabels:
-  app.kubernetes.io/part-of: zephyrus-bot
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: zephyrus-bot

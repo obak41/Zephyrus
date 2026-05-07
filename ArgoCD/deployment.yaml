@@ -218,12 +218,3 @@ spec:
             requests:
               memory: "256Mi"
               cpu: "250m"
-                  name: zephyrus-secrets
-                  key: MONGO_URI
-          resources:
-            limits:
-              memory: "512Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "250m"

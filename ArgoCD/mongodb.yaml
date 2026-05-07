@@ -41,6 +41,12 @@ spec:
       containers:
         - name: mongo
           image: mongo:latest
+          command:
+            - mongod
+            - "--bind_ip_all"
+            - "--setParameter"
+            - "--setParameter"
+            - "net.maxIncomingConnections=1000"
           readinessProbe:
             tcpSocket:
               port: 27017

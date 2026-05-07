@@ -10,18 +10,6 @@ spec:
   selector:
     app: zephyrus-mongodb
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: zephyrus-mongodb-svc
-  namespace: zephyrus
-spec:
-  clusterIP: None
-  ports:
-    - port: 27017
-  selector:
-    app: zephyrus-mongodb
----
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:

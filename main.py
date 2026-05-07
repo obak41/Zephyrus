@@ -8,6 +8,7 @@ import asyncio
 import aiohttp
 from dotenv import load_dotenv
 from datetime import datetime, timedelta, timezone
+import motor.motor_asyncio
 
 # --- インテント設定 ---
 intents = discord.Intents.default()
@@ -100,6 +101,21 @@ async def on_ready():
     print(f"Bot ID:{bot.user.id}")
     print(f"READY!")
     
+    if not status_task.is_running():
+        status_task.start()
+    # --- MongoDB 疎通確認テスト ---
+    if MONGO_URI:
+        try:
+            client = motor.motor_asyncio.AsyncIOMotorClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+            await client.admin.command('ping')
+            print("✅ MongoDB Connection: SUCCESS")
+        except Exception as e:
+            print(f"❌ MongoDB Connection: FAILED\nError: {e}")
+    else:
+        print("⚠️ MONGO_URI is not set.")
+    # -----------------------------
+
+    print(f"READY!")
     if not status_task.is_running():
         status_task.start()
 

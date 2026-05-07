@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: zephyrus-mongodb
+  name: zephyrus
   namespace: zephyrus
 spec:
   clusterIP: None
@@ -16,7 +16,7 @@ metadata:
   name: zephyrus-mongodb
   namespace: zephyrus
 spec:
-  serviceName: "zephyrus-mongodb"
+  serviceName: "zephyrus"
   replicas: 1
   selector:
     matchLabels:
@@ -108,7 +108,7 @@ spec:
             - sh
             - -c
             - |
-              until nc -zv zephyrus-mongodb 27017; do
+              until nc -zv zephyrus 27017; do
                 echo "waiting for mongodb-service..."
                 sleep 2
               done

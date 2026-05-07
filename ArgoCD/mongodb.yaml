@@ -38,15 +38,15 @@ spec:
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
-      containers:
+containers:
         - name: mongo
           image: mongo:latest
           command:
             - mongod
           args:
-              - "--bind_ip_all"
-              - "--setParameter"
-              - "net.maxIncomingConnections=1000"
+            - "--bind_ip_all"
+            - "--setParameter"
+            - "net.maxIncomingConnections=1000"
           readinessProbe:
             tcpSocket:
               port: 27017

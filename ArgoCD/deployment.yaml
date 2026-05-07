@@ -1,17 +1,104 @@
 apiVersion: apps/v1
+kind: Service
+metadata:
+  name: zephyrus-mongodb
+  namespace: zephyrus
+spec:
+  clusterIP: None
+  ports:
+    - port: 27017
+  selector:
+    app: zephyrus-mongodb
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zephyrus-mongodb
+  namespace: zephyrus
+spec:
+  serviceName: "zephyrus-mongodb"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zephyrus-mongodb
+  template:
+    metadata:
+      labels:
+        app: zephyrus-mongodb
+    spec:
+      initContainers:
+        - name: remove-lock-file
+          image: busybox:1.28
+          command:
+            - sh
+            - -c
+            - |
+              rm -f /data/db/mongod.lock
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      containers:
+        - name: mongo
+          image: mongo:latest
+          command:
+            - mongod
+          readinessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 60
+            periodSeconds: 20
+          ports:
+            - containerPort: 27017
+          resources:
+            limits:
+              memory:  "2Gi"
+              cpu: "500m"
+            requests:
+              memory: "1Gi"
+              cpu: "500m"
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: MONGO_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: MONGO_ROOT_PASSWORD
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+---
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: zephyrus-bot
+  name: zephyrus
   namespace: zephyrus
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: zephyrus-bot
+      app: zephyrus
   template:
     metadata:
       labels:
-        app: zephyrus-bot
+        app: zephyrus
     spec:
       initContainers:
         - name: wait-for-mongo
@@ -20,7 +107,7 @@ spec:
             - sh
             - -c
             - |
-              until nc -zv mongodb-service 27017; do
+              until nc -zv zephyrus-mongodb 27017; do
                 echo "waiting for mongodb-service..."
                 sleep 2
               done
@@ -28,14 +115,11 @@ spec:
         - name: bot
           image: ghcr.io/penti-nameko/zephyrus-bot:v0.7
           imagePullPolicy: Always
-          # 個別に設定しなくても、これ1つでSecret内の全データを環境変数として読み込みます
           envFrom:
             - secretRef:
                 name: zephyrus-secrets
-          # もしアプリ側が「TOKEN」ではなく「token」という小文字の名前を期待しているなら
-          # 以下のように個別に書くスタイルを残してもOKです（その場合、keyは大文字に合わせます）
           env:
-            - name: token
+            - name: token  # アプリケーション側が小文字を期待する場合のエイリアス
               valueFrom:
                 secretKeyRef:
                   name: zephyrus-secrets

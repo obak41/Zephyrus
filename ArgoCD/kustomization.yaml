@@ -6,7 +6,6 @@ namespace: zephyrus
 
 resources:
   - secret.yaml
-  - mongodb.yaml
   - deployment.yaml
 
 commonLabels:

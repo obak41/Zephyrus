@@ -40,17 +40,17 @@ spec:
       containers:
         - name: mongo
           image: mongo:latest
-          args: ["--wiredTigerCacheSizeGB", "0.25"]
-          livenessProbe:
-            tcpSocket:
-              port: 27017
-            initialDelaySeconds: 30  # 起動後30秒はチェックを待つ
-            periodSeconds: 10
           readinessProbe:
             tcpSocket:
               port: 27017
-            initialDelaySeconds: 15
+            initialDelaySeconds: 30  # 15秒から30秒へ延長
             periodSeconds: 10
+            timeoutSeconds: 5        # 応答待ち時間を5秒に設定
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 60  # 30秒から60秒へ延長（DB修復時間を考慮）
+            periodSeconds: 20
           ports:
             - containerPort: 27017
           # メモリ不足でのクラッシュ(OOM)を防ぐためにリソースを明示

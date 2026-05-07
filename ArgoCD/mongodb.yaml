@@ -4,6 +4,7 @@ metadata:
   name: mongodb-service
   namespace: zephyrus
 spec:
+  clusterIP: None  # ← これを追加
   ports:
     - port: 27017
   selector:

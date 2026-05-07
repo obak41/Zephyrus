@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ダッシュボード | Zephyrus-NET</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="ダッシュボード | Zephyrus-NET">
+    <meta property="og:description" content="Zephyusのダッシュボードにアクセス">
+    <meta property="og:image" content="https://zephyrus-net.com/icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="header-container">
+        <a href="/" class="logo-link">
+            <img src="https://zephyrus-net.com/Zephyrus-NET.png" alt="ZEPHYRUS-NET" class="logo-img">
+        </a>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+    </div>
+    <nav id="nav-menu" class="nav-menu">
+        <a href="https://zephyrus-net.com">トップページへ</a>
+        <a href="https://zephyrus-net.com/status">ステータス</a>
+        <a href="https://discord.gg/DKPj983cpb">サポートサーバー</a>
+    </nav>
+</header>
+
+<section class="hero dash-hero">
+    <div class="hero-text">
+        <h1>Zephyrus Dashboard</h1>
+        <p>サーバーの設定、統計の確認をここから。</p>
+        <div class="hero-buttons">
+            <a href="/dashboard" class="btn-primary">Discordでログイン</a>
+        </div>
+    </div>
+</section>
+
+<section class="stats">
+    <h2>現在の稼働状況</h2>
+    <div class="stats-box">
+        <div class="stat">
+            <span class="num" id="stat-servers">---</span>
+            <p>管理中のサーバー</p>
+        </div>
+        <div class="stat">
+            <span class="num" id="stat-users">---</span>
+            <p>総ユーザー数</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>© 2025-2026 Zephyrus Developers. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

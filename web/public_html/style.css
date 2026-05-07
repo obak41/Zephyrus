@@ -1,0 +1,531 @@
+/* ========= 基本スタイル ========= */
+body {
+    margin: 0;
+    background: #111;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ========= ナビバー ========= */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    background: #000;
+    color: #fff;
+}
+
+.logo-img {
+    display: flex;
+    align-items: center;
+    height: 60px;
+}
+
+.logo-img img {
+    height: 100%;
+    width: auto;
+}
+
+nav a {
+    margin-left: 20px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #ff0000;
+}
+
+/* ========= ヒーローセクション ========= */
+.hero {
+    background: url('header.jpg') no-repeat center center/cover;
+    /* 高さを固定せず、中身に合わせて伸びるようにする */
+    min-height: 400px; 
+    height: auto; 
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    box-sizing: border-box; /* パディングを含めた計算にする */
+}
+
+/* 文字に影をつけて視認性をアップ */
+.hero-text h1 {
+    font-size: 80px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+}
+
+.hero-text p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+}
+
+/* ボタンの横並び設定 */
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* ボタンの基本スタイル */
+.btn-primary, .btn-secondary {
+    padding: 12px 30px;
+    border-radius: 50px; /* 丸みのあるボタン */
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+/* サーバーに招待（メインボタン） */
+.btn-primary {
+    background: #ff0000;
+    color: #fff;
+    border: 2px solid #ff0000;
+}
+
+.btn-primary:hover {
+    background: #cc0000;
+    border-color: #cc0000;
+    transform: translateY(-3px); /* 浮き上がるアニメーション */
+    box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+}
+
+/* 機能を見る（サブボタン） */
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 2px solid #fff;
+    backdrop-filter: blur(5px); /* 背景を少しぼかす（今風） */
+}
+
+.btn-secondary:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-3px);
+}
+
+/* スマホ用調整 */
+@media (max-width: 768px) {
+    /* ヒーロー縮小 */
+    .hero {
+        height: auto !important;     /* 高さを固定せず中身に合わせる */
+        min-height: 450px;           /* ボタンが2つ並んでも余裕がある最小高さ */
+        padding: 100px 20px 60px;    /* 上下の余白をしっかり取る */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-sizing: border-box;      /* パディングを含めて高さを計算 */
+    }
+
+    .hero h1 {
+        font-size: 32px; /* 少し小さくして読みやすく */
+        padding: 10px;
+    }
+
+    .hero-buttons {
+        margin-top: 30px;            /* 説明文との間に隙間を作る */
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        max-width: 300px; /* 広がりすぎないように */
+        box-sizing: border-box;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%; /* 画面の外に完全に隠す */
+        width: 100%;  /* 画面いっぱいに広げる */
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95); /* 少し透ける黒で高級感を出す */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* 項目を上下中央に */
+        align-items: center;    /* 項目を左右中央に */
+        transition: left 0.4s ease;
+        z-index: 9999; /* 他の要素より確実に上に持ってくる */
+    }
+
+    /* メニュー表示中の位置 */
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu a {
+        margin-left: 0 !important; /* PC用のマージンを強制解除 */
+        border: none !important;   /* もし線が出ていたら消す */
+        padding: 20px;
+        width: 100%;
+        display: block;
+        box-sizing: border-box;
+    }
+
+    /* ハンバーガーボタンも最前面に */
+    .hamburger {
+        display: block;
+        z-index: 10000;
+        position: relative;
+    }
+    
+    .features {
+        padding: 40px 20px; /* 左右の余白を均等に */
+    }
+
+    .feature-grid {
+        flex-direction: column;
+        align-items: center; /* カードを中央に寄せる */
+        gap: 20px;
+    }
+
+    .feature {
+        width: 100%;       /* 画面幅いっぱいに広げる */
+        max-width: 400px;  /* 広がりすぎないように制限（お好みで） */
+        box-sizing: border-box; /* パディングを含めて100%にする */
+        text-align: left;  /* 文章は左揃えが見やすい */
+    }
+}
+
+.hero h1 {
+    font-size: 80px;
+    padding: 20px 40px;
+    border-radius: 8px;
+    color: #fff;
+}
+
+/* ========= 統計エリア ========= */
+.stats {
+    text-align: center;
+    padding: 60px 20px;
+    background: #eee;
+    color: #000;
+}
+
+.stats-box {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    margin-top: 30px;
+}
+
+.stat .num {
+    font-size: 32px;
+    font-weight: bold;
+    color: #ff0000;
+}
+
+/* ========= 特徴セクション ========= */
+.features {
+    padding: 60px;
+}
+
+.features h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.feature-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.feature {
+    width: 30%;
+    background: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.feature h3 {
+    color: #ff3333;
+}
+
+/* ========= 利用規約/プライバシーポリシーコンテンツ ========= */
+.page-content {
+    max-width: 1500px;
+    margin: 30px auto;
+    padding: 20px 25px;
+    line-height: 1.8;
+    background: #1a1a1a;
+    border-radius: 10px;
+}
+
+/* ========= フッター ========= */
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #000;
+    margin-top: 40px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    color: #bbb;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* ======================================
+   📱 スマホ対応 メディアクエリ
+   幅 768px 以下（スマホ）
+====================================== */
+@media (max-width: 768px) {
+
+    /* ナビバー縦並び */
+    .navbar {
+        flex-direction: column;
+        padding: 20px;
+        text-align: center;
+        gap: 10px;
+    }
+
+    nav a {
+        margin: 10px 0;
+    }
+
+    /* ロゴ縮小 */
+    .logo-img {
+        height: 40px;
+    }
+
+    .logo-img img {
+        height: 100%;
+    }
+
+    /* ヒーロー縮小 */
+    .hero {
+        height: 250px;
+        padding: 20px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+        padding: 10px 20px;
+    }
+
+    /* 統計エリア縦並び */
+    .stats-box {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* 特徴カード縦並び */
+    .feature-grid {
+        flex-direction: column;
+    }
+
+    .feature {
+        width: 100%;
+    }
+
+    /* page-content 余白最適化 */
+    .page-content {
+        margin: 15px;
+        padding: 15px;
+    }
+}
+
+/* ======================================
+   📱 超小画面（幅480px以下）
+====================================== */
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    .features {
+        padding: 40px 20px;
+    }
+}
+
+/* ===== ハンバーガーメニュー ===== */
+.hamburger {
+    display: none;
+    font-size: 32px;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* メニュー初期状態（PC） */
+#nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+/* ================================
+   📱 スマホ用ハンバーガー処理
+================================ */
+@media (max-width: 768px) {
+
+    /* ハンバーガーを表示 */
+    .hamburger {
+        display: block;
+    }
+
+    /* ヘッダーを横並び・中央揃え */
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* ロゴとボタンを両端に飛ばす */
+        padding: 10px 5px; /* 左右のパディングを 15px から 5px 程度に減らす */
+        width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* ハンバーガーアイコン */
+    .hamburger {
+        font-size: 28px;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        margin-left: auto; /* 左側に大きな空白を作って右に寄せる */
+        padding-right: 10px; /* 画面の端に近すぎない程度の微調整 */
+        outline: none;
+    }
+    
+    /* スマホメニュー (デフォルトは隠す) */
+    .nav-menu {
+        position: fixed;
+        left: -250px;
+        /* ←ここで左側に隠しておく */
+        top: 0;
+        width: 250px;
+        height: 100vh;
+        background: #111;
+        display: flex;
+        flex-direction: column;
+        padding-top: 80px;
+        transition: left 0.3s ease;
+        /* スライドアニメーション */
+    }
+    
+    /* メニュー表示中 */
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    /* メニュー項目 */
+    .nav-menu a {
+        padding: 15px 20px;
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        border-bottom: 1px solid #222;
+    }
+    
+    /* ホバー */
+    .nav-menu a:hover {
+        background: #222;
+    }
+}
+
+/* ダッシュボード専用ヒーローの背景を少し落ち着かせる（任意） */
+.dash-hero {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('header.jpg') no-repeat center center/cover !important;
+    min-height: 500px !important;
+}
+
+/* 統計エリアをダークモードに合わせる場合は微調整 */
+.stats {
+    background: #1a1a1a !important; /* 既存は#eeeだったので黒系に変更 */
+    color: #fff !important;
+}
+
+.stat .num {
+    color: #00ff00 !important; /* ダッシュボードなので「正常」を表す緑系もアリ */
+}
+
+/* ボタンの幅を少し広げて存在感を出す */
+.dash-hero .btn-primary {
+    min-width: 250px;
+    font-size: 20px;
+    background: #5865F2; /* Discordブランドカラー */
+    border-color: #5865F2;
+}
+
+.dash-hero .btn-primary:hover {
+    background: #4752c4;
+    border-color: #4752c4;
+    box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+}
+
+
+/* dashboard.css */
+.main-layout { display: flex; min-height: calc(100vh - 60px); }
+
+/* サイドバー */
+.sidebar { width: 240px; background: #2c2f33; padding: 20px; }
+.sidebar ul { list-style: none; padding: 0; }
+.sidebar li { padding: 12px; border-radius: 5px; margin-bottom: 5px; }
+.sidebar li.active { background: #5865f2; }
+.sidebar a { color: white; text-decoration: none; }
+
+/* ユーザーメニュー */
+.user-menu { position: relative; cursor: pointer; }
+.avatar-small { width: 40px; height: 40px; border-radius: 50%; }
+.dropdown {
+    position: absolute; right: 0; top: 50px; background: #23272a;
+    padding: 20px; border-radius: 8px; display: none; text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5); z-index: 100; min-width: 180px;
+}
+.dropdown.show { display: block; }
+.avatar-large { width: 80px; height: 80px; border-radius: 50%; margin-bottom: 10px; }
+.avatar-small {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #5865f2; /* Discordっぽい青枠 */
+}
+/* サーバー一覧 */
+.server-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; padding: 20px; }
+.server-card {
+    background: #2f3136; padding: 15px; border-radius: 10px; text-align: center;
+    transition: 0.2s; border: 1px solid transparent;
+}
+.server-card:hover { border-color: #5865f2; transform: translateY(-5px); }
+.server-icon { width: 70px; height: 70px; border-radius: 50%; margin-bottom: 10px; }
+.server-card {
+    background: #2f3136;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.server-card:hover {
+    background: #3c3f44;
+}
+
+.server-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #36393f; /* アイコンがない時用 */
+}

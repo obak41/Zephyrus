@@ -174,6 +174,65 @@ spec:
                 secretKeyRef:
                   name: zephyrus-secrets
                   key: MONGO_URI
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zephyrus-web-svc
+  namespace: zephyrus
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 3000
+  selector:
+    app: zephyrus-web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zephyrus-web
+  namespace: zephyrus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zephyrus-web
+  template:
+    metadata:
+      labels:
+        app: zephyrus-web
+    spec:
+      containers:
+        - name: web
+          image: ghcr.io/penti-nameko/zephyrus-web:latest # Web用のイメージを指定
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: TOKEN
+            - name: CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: CLIENT_SECRET
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: zephyrus-secrets
+                  key: MONGO_URI
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+                  name: zephyrus-secrets
+                  key: MONGO_URI
           resources:
             limits:
               memory: "512Mi"

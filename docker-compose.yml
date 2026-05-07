@@ -24,5 +24,18 @@ services:
     volumes:
       - .:/app
 
+  web:
+    build:
+      context: .
+      dockerfile: ./web/node-app/Dockerfile
+    container_name: zephyrus-web
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://admin:password@db:27017/zephyrus
+
 volumes:
   mongo_data:

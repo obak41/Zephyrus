@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ダッシュボード | Zephyrus-NET</title>
+    <link rel="stylesheet" href="/dashboard/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/dashboard/script.js"></script>
+</head>
+<body>
+
+<header class="navbar">
+    <div class="header-container">
+        <a href="/" class="logo-link">
+            <img src="https://zephyrus-net.com/Zephyrus-NET.png" alt="ZEPHYRUS" class="logo-img">
+        </a>
+        <div class="user-menu" id="user-menu-trigger">
+            <img id="user-avatar" src="" alt="Avatar" class="avatar-small">
+            <div class="dropdown" id="user-dropdown">
+                <img id="user-avatar-large" src="" alt="Avatar" class="avatar-large">
+                <p id="user-name-display"></p>
+                <hr>
+                <a href="/auth/logout" class="logout-link">ログアウト</a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="main-layout">
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li class="active"><a href="#">サーバー選択</a></li>
+                <li><a href="https://zephyrus-net.com">トップページへ</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="content">
+        <h2>管理中のサーバー</h2>
+        <div class="server-grid" id="server-list">
+            </div>
+    </main>
+</div>
+
+</body>
+</html>
